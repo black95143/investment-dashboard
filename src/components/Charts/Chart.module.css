@@ -1,0 +1,18 @@
+.charts {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.chart {
+  width: 100%;
+  height: auto;
+}
+
+.chartInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.document {
+  text-align: left;
+}
