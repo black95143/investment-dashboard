@@ -45,11 +45,11 @@ const Charts = () => {
           options={chartElementInfo().options}
         />
         <div className={styles.chartInfo}>
-          <p className={styles.source}>source: {chartElementInfo.source}</p>
-          <p className={styles.date}>updated: {chartElementInfo.updated}</p>
+          <p className={styles.source}>source: {chartElementInfo().source}</p>
+          <p className={styles.date}>updated: {chartElementInfo().updated}</p>
         </div>
         <div>
-          <p className={styles.document}>{chartElementInfo.document}</p>
+          <p className={styles.document}>{chartElementInfo().document}</p>
         </div>
       </Col>
     </Row>
