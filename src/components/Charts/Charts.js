@@ -1,39 +1,59 @@
 import React from 'react';
 import styles from './Chart.module.css';
 import { Row, Col } from 'react-bootstrap';
-import dummyChart from './dummyChart.jpg'
+import Highcharts from 'highcharts/highstock';
+import HighchartsReact from 'highcharts-react-official';
+import dummyData from './dummyData.json';
+
+const chartElementInfo = () => {
+  const chartData = [];
+  dummyData.TREAST.data.observations.forEach(ob => {
+    chartData.push([new Date(ob.date).getTime(), Number(ob.value)]);
+  });
+
+  return {
+    document: dummyData.TREAST.document,
+    source: dummyData.TREAST.source,
+    updated: dummyData.TREAST.latest_released_date,
+    options: {
+      title: {
+        text: dummyData.TREAST.title
+      },
+      series: [
+        {
+          name: dummyData.TREAST.title,
+          data: chartData
+        }
+      ],
+      xAxis: {
+        type: "datetime",
+        title: {
+          text: 'Date'
+        }
+      }
+    }
+  }
+};
 
 const Charts = () => {
-  const chartData = [
-    {
-      title: 'Chart1',
-      document: 'Consectetur ullamco aliquip et irure do proident ipsum minim nostrud occaecat est mollit.Irure minim qui adipisicing mollit id ex esse enim magna sint eiusmod ad.Culpa aliqua sint exercitation aute sunt reprehenderit incididunt deserunt quis enim occaecat deserunt amet.'
-    },
-    {
-      title: 'Chart2',
-      document: 'Consectetur ullamco aliquip et irure do proident ipsum minim nostrud occaecat est mollit.Irure minim qui adipisicing mollit id ex esse enim magna sint eiusmod ad.Culpa aliqua sint exercitation aute sunt reprehenderit incididunt deserunt quis enim occaecat deserunt amet.'
-    },
-    {
-      title: 'Chart3',
-      document: 'Consectetur ullamco aliquip et irure do proident ipsum minim nostrud occaecat est mollit.Irure minim qui adipisicing mollit id ex esse enim magna sint eiusmod ad.Culpa aliqua sint exercitation aute sunt reprehenderit incididunt deserunt quis enim occaecat deserunt amet.'
-    }
-  ]
-
-  return <Row className={styles.charts}>
-    {chartData.map((e) => (
+  return (
+    <Row className={styles.charts}>
       <Col sm={12} md={6} lg={4} className={styles.chartItem}>
-        <h1 className={styles.title}>{e.title}</h1>
-        <img src={dummyChart} className={styles.chart} alt="chart" />
+        <HighchartsReact
+          highcharts={Highcharts}
+          constructorType={'stockChart'}
+          options={chartElementInfo().options}
+        />
         <div className={styles.chartInfo}>
-          <p className={styles.source}>source: xxx</p>
-          <p className={styles.date}>updated: xxx</p>
+          <p className={styles.source}>source: {chartElementInfo.source}</p>
+          <p className={styles.date}>updated: {chartElementInfo.updated}</p>
         </div>
         <div>
-          <p className={styles.document}>{e.document}</p>
+          <p className={styles.document}>{chartElementInfo.document}</p>
         </div>
       </Col>
-    ))}
-  </Row>
+    </Row>
+  )
 };
 
 export default Charts;
