@@ -3,9 +3,14 @@
   padding: 1rem;
 }
 
-.chart {
-  width: 100%;
-  height: auto;
+.chartItem {
+  margin-bottom: 0.5rem;
+}
+
+.chartFrame {
+  padding: 0.5rem;
+  background-color: rgb(137, 204, 224);
+  height: 100%;
 }
 
 .chartInfo {
