@@ -15,20 +15,20 @@ const fetchData = (series_id) => {
 
 const Charts = (props) => {
   let chartData = [];
-  props.chartCollections.forEach(collection => {
+  props.charts.forEach(chart => {
     chartData.push({
-      id: collection.id,
-      document: collection.document,
-      source: collection.source,
-      updated: collection.latest_released_date,
+      id: chart.id,
+      document: chart.document,
+      source: chart.source,
+      updated: chart.latest_released_date,
       options: {
         title: {
-          text: collection.title
+          text: chart.title
         },
         series: [
           {
-            name: collection.title,
-            data: fetchData(collection.series_id)
+            name: chart.title,
+            data: fetchData(chart.series_id)
           }
         ],
         xAxis: {

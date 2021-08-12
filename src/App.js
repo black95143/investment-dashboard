@@ -5,11 +5,13 @@ import Charts from './components/Charts/Charts';
 import chartCollections from './data/chart-collections.json';
 
 function App() {
+  const charts = chartCollections;
+
   return (
     <div className="App">
       <Navbar />
       <Selector />
-      <Charts chartCollections={chartCollections} />
+      <Charts charts={charts} />
     </div>
   );
 }
