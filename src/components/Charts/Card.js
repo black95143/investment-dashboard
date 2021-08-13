@@ -1,35 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Card.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
-import observations from '../../data/observations.json';
-
-const fetchData = (series_id) => {
-  let data = [];
-  observations[series_id].forEach(ob => {
-    data.push([new Date(ob.date).getTime(), Number(ob.value)]);
-  });
-  return data
-};
 
 const Card = (props) => {
-  const chartOption = {
+  const [chartOption, setChartOption] = useState({
     title: {
       text: props.item.title
     },
-    series: [
-      {
-        name: props.item.title,
-        data: fetchData(props.item.series_id)
-      }
-    ],
     xAxis: {
       type: "datetime",
       title: {
         text: 'Date'
       }
     }
+  });
+
+  const fetchData = (series_id) => {
+    fetch(`https://proxy-server-fred.herokuapp.com/my-service/series/observations?series_id=${series_id}&api_key=${process.env.REACT_APP_API_KEY}&file_type=json`, {
+      headers: {
+        'Target-URL': 'https://api.stlouisfed.org/fred'
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let data1 = [];
+        data.observations.forEach(ob => {
+          data1.push([new Date(ob.date).getTime(), Number(ob.value)]);
+        });
+        setChartOption((prevOption) => {
+          return {
+            ...prevOption,
+            series: [
+              {
+                name: props.item.title,
+                data: data1
+              }
+            ]
+          }
+        })
+      });
   };
+
+  useEffect(() => {
+    fetchData(props.item.series_id);
+  }, []);
 
   return (
     <div className={styles.chartFrame}>
