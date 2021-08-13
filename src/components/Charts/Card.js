@@ -17,7 +17,7 @@ const Card = (props) => {
   });
 
   const fetchData = (series_id) => {
-    fetch(`https://proxy-server-fred.herokuapp.com/my-service/series/observations?series_id=${series_id}&api_key=${process.env.REACT_APP_API_KEY}&file_type=json`, {
+    fetch(`https://proxy-server-fred.herokuapp.com/series/observations?series_id=${series_id}&api_key=${process.env.REACT_APP_API_KEY}&file_type=json`, {
       headers: {
         'Target-URL': 'https://api.stlouisfed.org/fred'
       }
