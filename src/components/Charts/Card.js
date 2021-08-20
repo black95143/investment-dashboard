@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styles from './Card.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
@@ -13,11 +13,16 @@ const Card = (props) => {
       title: {
         text: 'Date'
       }
-    }
+    },
+    series: [
+      {
+        name: props.item.title
+      }
+    ]
   });
 
-  const fetchData = (series_id) => {
-    fetch(`https://proxy-server-fred.herokuapp.com/series/observations?series_id=${series_id}&api_key=${process.env.REACT_APP_API_KEY}&file_type=json`, {
+  const fetchData = useCallback((series_id) => {
+    fetch(`${process.env.REACT_APP_PROXY_SERVER_URL}/series/observations?series_id=${series_id}&api_key=${process.env.REACT_APP_API_KEY}&file_type=json`, {
       headers: {
         'Target-URL': 'https://api.stlouisfed.org/fred'
       }
@@ -33,18 +38,18 @@ const Card = (props) => {
             ...prevOption,
             series: [
               {
-                name: props.item.title,
+                name: prevOption.series[0].name,
                 data: data1
               }
             ]
           }
-        })
+        });
       });
-  };
+  }, []);
 
   useEffect(() => {
     fetchData(props.item.series_id);
-  }, []);
+  }, [fetchData, props]);
 
   return (
     <div className={styles.chartFrame}>
