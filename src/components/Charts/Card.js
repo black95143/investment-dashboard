@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import styles from './Card.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
+import fredAPI from './fredAPI';
+// import { data } from 'jquery';
 
 const Card = (props) => {
   const [chartOption, setChartOption] = useState({
@@ -21,30 +23,19 @@ const Card = (props) => {
     ]
   });
 
-  const fetchData = useCallback((series_id) => {
-    fetch(`${process.env.REACT_APP_PROXY_SERVER_URL}/series/observations?series_id=${series_id}&api_key=${process.env.REACT_APP_API_KEY}&file_type=json`, {
-      headers: {
-        'Target-URL': 'https://api.stlouisfed.org/fred'
+  const fetchData = useCallback(async (series_id) => {
+    const seriesData = await fredAPI(series_id);
+    setChartOption((prevOption) => {
+      return {
+        ...prevOption,
+        series: [
+          {
+            name: prevOption.series[0].name,
+            data: seriesData
+          }
+        ]
       }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        let data1 = [];
-        data.observations.forEach(ob => {
-          data1.push([new Date(ob.date).getTime(), Number(ob.value)]);
-        });
-        setChartOption((prevOption) => {
-          return {
-            ...prevOption,
-            series: [
-              {
-                name: prevOption.series[0].name,
-                data: data1
-              }
-            ]
-          }
-        });
-      });
   }, []);
 
   useEffect(() => {
