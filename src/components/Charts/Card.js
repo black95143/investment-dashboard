@@ -3,7 +3,6 @@ import styles from './Card.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import fredAPI from './fredAPI';
-// import { data } from 'jquery';
 
 const Card = (props) => {
   const [chartOption, setChartOption] = useState({
@@ -24,18 +23,22 @@ const Card = (props) => {
   });
 
   const fetchData = useCallback(async (series_id) => {
-    const seriesData = await fredAPI(series_id);
-    setChartOption((prevOption) => {
-      return {
-        ...prevOption,
-        series: [
-          {
-            name: prevOption.series[0].name,
-            data: seriesData
-          }
-        ]
-      }
-    })
+    try {
+      const seriesData = await fredAPI(series_id);
+      setChartOption((prevOption) => {
+        return {
+          ...prevOption,
+          series: [
+            {
+              name: prevOption.series[0].name,
+              data: seriesData
+            }
+          ]
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }, []);
 
   useEffect(() => {
