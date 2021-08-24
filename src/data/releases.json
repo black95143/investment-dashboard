@@ -1,0 +1,26 @@
+[
+  {
+    "id": 18,
+    "realtime_start": "2021-08-22",
+    "realtime_end": "2021-08-22",
+    "name": "H.15 Selected Interest Rates",
+    "press_release": true,
+    "link": "http://www.federalreserve.gov/releases/h15/"
+  },
+  {
+    "id": 20,
+    "realtime_start": "2021-08-22",
+    "realtime_end": "2021-08-22",
+    "name": "H.4.1 Factors Affecting Reserve Balances",
+    "press_release": true,
+    "link": "http://www.federalreserve.gov/releases/h41/"
+  },
+  {
+    "id": 95,
+    "realtime_start": "2021-08-22",
+    "realtime_end": "2021-08-22",
+    "name": "Manufacturer's Shipments, Inventories, and Orders (M3) Survey",
+    "press_release": true,
+    "link": "http://www.census.gov/indicator/www/m3/"
+  }
+]
