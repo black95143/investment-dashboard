@@ -1,17 +1,15 @@
 import React from 'react';
-import styles from './Charts.module.css';
-import { Row, Col } from 'react-bootstrap';
 import Card from './Card';
+import Pagination from '../../UI/pagination';
 
 const Charts = (props) => {
   return (
-    <Row className={styles.charts}>
-      {props.charts.map((e) => (
-        <Col sm={12} md={12} lg={6} xxl={4} className={styles.chartItem} key={e.id}>
-          <Card item={e} />
-        </Col>
-      ))}
-    </Row>
+    <Pagination
+      data={props.charts}
+      RenderComponent={Card}
+      pageLimit={Math.ceil(props.charts.length / 3)}
+      dataLimit={3}
+    />
   )
 };
 

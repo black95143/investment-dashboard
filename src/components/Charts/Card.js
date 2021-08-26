@@ -3,11 +3,12 @@ import styles from './Card.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import fredAPI from './fredAPI';
+import { Col } from 'react-bootstrap';
 
 const Card = (props) => {
   const [chartOption, setChartOption] = useState({
     title: {
-      text: props.item.title
+      text: props.data.title
     },
     xAxis: {
       type: "datetime",
@@ -17,7 +18,7 @@ const Card = (props) => {
     },
     series: [
       {
-        name: props.item.title
+        name: props.data.title
       }
     ]
   });
@@ -42,24 +43,26 @@ const Card = (props) => {
   }, []);
 
   useEffect(() => {
-    fetchData(props.item.series_id);
+    fetchData(props.data.series_id);
   }, [fetchData, props]);
 
   return (
-    <div className={styles.chartFrame}>
-      <HighchartsReact
-        highcharts={Highcharts}
-        constructorType={'stockChart'}
-        options={chartOption}
-      />
-      <div className={styles.chartInfo}>
-        <p className={styles.source}>source: {props.item.source}</p>
-        <p className={styles.date}>updated: {props.item.updated}</p>
+    <Col sm={12} md={12} lg={6} xxl={4} className={styles.chartItem} key={props.data.id}>
+      <div className={styles.chartFrame}>
+        <HighchartsReact
+          highcharts={Highcharts}
+          constructorType={'stockChart'}
+          options={chartOption}
+        />
+        <div className={styles.chartInfo}>
+          <p className={styles.source}>source: {props.data.source}</p>
+          <p className={styles.date}>updated: {props.data.updated}</p>
+        </div>
+        <div>
+          <p className={styles.document}>{props.data.document}</p>
+        </div>
       </div>
-      <div>
-        <p className={styles.document}>{props.item.document}</p>
-      </div>
-    </div>
+    </Col>
   )
 }
 
