@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Row } from 'react-bootstrap';
-import './pagination.css';
+import styles from './Pagination.module.css';
 
 const Pagination = (props) => {
   const { data, RenderComponent, pageLimit, dataLimit } = props;
@@ -40,10 +40,10 @@ const Pagination = (props) => {
           ))}
         </Row>
       </div>
-      <div className="pagination">
+      <div className={styles.pagination}>
         <button
           onClick={goToPreviousPage}
-          className={`prev ${currentPage === 1 ? 'disabled' : ''}`}
+          className={`${styles.prev} ${currentPage === 1 ? styles.disabled : ''}`}
         >
           prev
         </button>
@@ -51,14 +51,14 @@ const Pagination = (props) => {
           <button
             key={index}
             onClick={changePage}
-            className={`paginationItem ${currentPage === item ? 'active' : null}`}
+            className={`${styles.paginationItem} ${currentPage === item ? styles.active : null}`}
           >
             <span>{item}</span>
           </button>
         ))}
         <button
           onClick={goToNextPage}
-          className={`next ${currentPage === pages || pages === 0 ? 'disabled' : ''}`}
+          className={`${styles.next} ${currentPage === pages || pages === 0 ? styles.disabled : ''}`}
         >
           next
         </button>

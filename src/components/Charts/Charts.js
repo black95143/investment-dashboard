@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import Pagination from '../../UI/pagination';
+import Pagination from '../../UI/Pagination';
 
 const Charts = (props) => {
   return (
