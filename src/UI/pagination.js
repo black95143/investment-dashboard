@@ -33,7 +33,7 @@ const Pagination = (props) => {
 
   return (
     <div>
-      <div className="dataContainer">
+      <div className={styles.dataContainer}>
         <Row>
           {getPaginatedData().map((d, idx) => (
             <RenderComponent key={idx} data={d} />
