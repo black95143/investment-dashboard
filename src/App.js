@@ -3,7 +3,8 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Selector from './components/Selector/Selector';
 import Charts from './components/Charts/Charts';
-import chartCollections from './data/chart-collections.json';
+// import charts from './data/charts.json';
+import charts from './data/chart-collections.json';
 import releases from './data/releases.json';
 import sources from './data/sources.json';
 
@@ -11,17 +12,19 @@ function App() {
   const [filteredReleaseId, setFilteredReleaseId] = useState(0);
   const [filteredSourceId, setFilteredSourceId] = useState(0);
 
-  const filteredCharts = chartCollections.filter(chart => {
-    if (filteredReleaseId === 0 && filteredSourceId === 0) return true
+  const filteredCharts = charts.filter(chart => {
+    let filterd = false
+    if (filteredReleaseId === 0 && filteredSourceId === 0) { filterd = true }
     if (filteredReleaseId === 0 && filteredSourceId !== 0) {
-      return chart.source_id === filteredSourceId
+      filterd = chart.source_id === filteredSourceId
     }
     if (filteredReleaseId !== 0 && filteredSourceId === 0) {
-      return chart.release_id === filteredReleaseId
+      filterd = chart.release_id === filteredReleaseId
     }
     if (filteredReleaseId !== 0 && filteredSourceId !== 0) {
-      return chart.release_id === filteredReleaseId && chart.source_id === filteredSourceId
+      filterd = chart.release_id === filteredReleaseId && chart.source_id === filteredSourceId
     }
+    return filterd
   });
 
   const releaseIdChangeHandler = (selectedReleaseId) => {
