@@ -3,7 +3,6 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Selector from './components/Selector/Selector';
 import Charts from './components/Charts/Charts';
-// import charts from './data/charts.json';
 import charts from './data/chart-collections.json';
 import releases from './data/releases.json';
 import sources from './data/sources.json';
