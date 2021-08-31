@@ -25,7 +25,17 @@ const Card = (props) => {
 
   const fetchData = useCallback(async (series_id) => {
     try {
-      const seriesData = await fredAPI(series_id);
+      let seriesData, fetchDate
+      // get data from cachedData
+      if (props.cachedData.current[series_id]) {
+        if (Date.now() - (new Date(props.cachedData.current[series_id]["fetchDate"])).getTime() < 57600000) {
+          seriesData = props.cachedData.current[series_id]["seriesData"]
+        }
+      } else {
+        // get data from api
+        [seriesData, fetchDate] = await fredAPI(series_id);
+        props.onSaveCachedData(series_id, seriesData, fetchDate)
+      }
       setChartOption((prevOption) => {
         return {
           ...prevOption,
@@ -40,7 +50,7 @@ const Card = (props) => {
     } catch (error) {
       console.log(error)
     }
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     fetchData(props.data.series_id);

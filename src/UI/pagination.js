@@ -3,7 +3,7 @@ import { Row } from 'react-bootstrap';
 import styles from './Pagination.module.css';
 
 const Pagination = (props) => {
-  const { data, RenderComponent, pageLimit, dataLimit } = props;
+  const { data, RenderComponent, pageLimit, dataLimit, cachedData, onSaveCachedData } = props;
   const pages = Math.ceil(data.length / dataLimit);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -36,7 +36,7 @@ const Pagination = (props) => {
       <div className={styles.dataContainer}>
         <Row>
           {getPaginatedData().map((d, idx) => (
-            <RenderComponent key={idx} data={d} />
+            <RenderComponent key={idx} data={d} cachedData={cachedData} onSaveCachedData={onSaveCachedData} />
           ))}
         </Row>
       </div>

@@ -6,11 +6,12 @@ const useFredAPI = (series_id) => {
   })
     .then((response) => response.json())
     .then((data) => {
+      let fetchDate = data.realtime_end
       let seriesData = [];
       data.observations.forEach(ob => {
         seriesData.push([new Date(ob.date).getTime(), Number(ob.value)]);
       });
-      return seriesData;
+      return [seriesData, fetchDate];
     })
 };
 
