@@ -20,7 +20,15 @@ const Card = (props) => {
       {
         name: props.data.title
       }
-    ]
+    ],
+    chart: {
+      events: {
+        load() {
+          this.showLoading();
+          setTimeout(this.hideLoading.bind(this), 2000)
+        }
+      }
+    }
   });
 
   const fetchData = useCallback(async (series_id) => {
