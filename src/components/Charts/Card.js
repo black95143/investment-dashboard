@@ -35,10 +35,10 @@ const Card = (props) => {
     try {
       let seriesData, fetchDate
       // get data from cachedData
-      if (props.cachedData.current[series_id]) {
-        if (Date.now() - (new Date(props.cachedData.current[series_id]["fetchDate"])).getTime() < 57600000) {
-          seriesData = props.cachedData.current[series_id]["seriesData"]
-        }
+      if (props.cachedData.current[series_id] &&
+        (Date.now() - (new Date(props.cachedData.current[series_id]["fetchDate"])).getTime() < 57600000)
+      ) {
+        seriesData = props.cachedData.current[series_id]["seriesData"]
       } else {
         // get data from api
         [seriesData, fetchDate] = await fredAPI(series_id);
