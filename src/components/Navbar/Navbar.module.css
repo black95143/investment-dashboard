@@ -5,3 +5,11 @@
 .title {
   margin-left: 1.5rem;
 }
+
+.link p {
+  margin: 0 auto;
+}
+
+.link p:hover {
+  color: white;
+}

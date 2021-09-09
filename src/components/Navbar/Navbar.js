@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import svgIcon from './navbaricon.svg';
 import Nav from 'react-bootstrap/Nav';
 
-const Topbar = () => {
+const Topbar = (props) => {
   return (
     <Navbar className={styles.navbar}>
       <Navbar.Brand className={styles.title} href="/">
@@ -17,9 +17,9 @@ const Topbar = () => {
         />{' '}Invsetment Dashboard
       </Navbar.Brand>
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="me-auto">
-          <Nav.Link href="/">首頁</Nav.Link>
-          <Nav.Link href="/macroeconomics">總體經濟</Nav.Link>
+        <Nav className="me-auto" activeKey={props.path}>
+          <Nav.Link href="/" className={styles.link}><p>首頁</p></Nav.Link>
+          <Nav.Link href="/macroeconomics" className={styles.link}><p>總體經濟</p></Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

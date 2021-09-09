@@ -5,7 +5,7 @@ import Body from "./body";
 const Layout = (props) => {
   return (
     <React.Fragment>
-      <Header />
+      <Header {...props} />
       <Body {...props} />
     </React.Fragment>
   );
