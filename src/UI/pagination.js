@@ -45,7 +45,7 @@ const Pagination = (props) => {
           onClick={goToPreviousPage}
           className={`${styles.prev} ${currentPage === 1 ? styles.disabled : ''}`}
         >
-          prev
+          <span>&#8249;</span>
         </button>
         {getPaginationGroup().map((item, index) => (
           <button
@@ -60,7 +60,7 @@ const Pagination = (props) => {
           onClick={goToNextPage}
           className={`${styles.next} ${currentPage === pages || pages === 0 ? styles.disabled : ''}`}
         >
-          next
+          <span>&#8250;</span>
         </button>
       </div>
     </div>

@@ -9,10 +9,11 @@
 }
 
 .paginationItem {
+  color: rgb(38, 111, 144);
+  font-weight: bold;
   background: #fff;
-  border: 2px solid #666;
+  border: none;
   padding: 10px 15px;
-  border-radius: 50%;
   height: 45px;
   width: 45px;
   position: relative;
@@ -29,17 +30,19 @@
 
 .prev,
 .next {
-  background: #fff;
+  color: rgb(38, 111, 144);
+  font-weight: bold;
+  background: rgb(137, 204, 224);
+  border-radius: 50%;
   border: none;
-  padding: 10px;
-  color: blue;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
-  margin: 0 10px;
-  cursor: pointer;
+  padding: 10px 15px;
+  height: 45px;
+  width: 45px;
+  position: relative;
+  margin: 0 5px;
 }
 
 .paginationItem.active {
-  border: 1px solid #888;
   color: #888;
   pointer-events: none;
 }
@@ -47,6 +50,5 @@
 .prev.disabled,
 .next.disabled {
   pointer-events: none;
-  box-shadow: none;
   color: #999;
 }
