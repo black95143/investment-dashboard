@@ -7,9 +7,6 @@ import { Col } from 'react-bootstrap';
 
 const Card = (props) => {
   const [chartOption, setChartOption] = useState({
-    title: {
-      text: props.data.title
-    },
     xAxis: {
       type: "datetime",
       title: {
@@ -47,9 +44,12 @@ const Card = (props) => {
       setChartOption((prevOption) => {
         return {
           ...prevOption,
+          title: {
+            text: props.data.title
+          },
           series: [
             {
-              name: prevOption.series[0].name,
+              name: props.data.title,
               data: seriesData
             }
           ]
