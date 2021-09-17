@@ -1,0 +1,45 @@
+.bar {
+  display: flex;
+  padding: 0;
+}
+
+.bar_left_side {
+  margin: 0.5rem 0;
+  margin-left: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.bar_right_side {
+  margin: 0.5rem;
+}
+
+.bar_icon {
+  line-height: 1.5rem;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #ffffff;
+  font-size: 0.8rem;
+}
+
+.bar_text {
+  font-weight: bold;
+  text-align: left;
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+
+.bar_data_group {
+  display: flex;
+  flex-flow: nowrap;
+}
+
+.bar_data {
+  line-height: 1.5rem;
+  margin: 0 5px;
+}
+
+.bar_data_change {
+  line-height: 1.5rem;
+  margin: 0 5px;
+}
