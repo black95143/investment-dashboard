@@ -4,7 +4,9 @@ import styles from './Title.module.css';
 const Title = () => {
   return (
     <React.Fragment>
-      <p className={styles.title}>全球股市指數 - 2021/09/15</p>
+      <div className={styles.titleBack}>
+        <p className={styles.title}>最新資訊</p>
+      </div>
     </React.Fragment>
   );
 };

@@ -1,7 +1,13 @@
+.titleBack {
+  padding-top: 60px;
+  background-color: rgb(235, 235, 235);
+  margin-top: 0;
+}
+
 .title {
   font-weight: bold;
   font-size: 1.5rem;
-  margin-top: 1rem;
-  margin-left: 3rem;
-  text-align: left;
+  padding: 1rem 0;
+  margin: auto 0;
+  text-align: center;
 }
