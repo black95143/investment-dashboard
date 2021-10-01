@@ -3,6 +3,8 @@ import styles from './Navbar.module.css';
 import Navbar from 'react-bootstrap/Navbar';
 import svgIcon from './navbaricon.svg';
 import Nav from 'react-bootstrap/Nav';
+import Burger from '../../UI/Burger/Burger';
+import Menu from '../../UI/Menu/Menu';
 
 const Topbar = (props) => {
   return (
@@ -22,6 +24,8 @@ const Topbar = (props) => {
           <Nav.Link href="/macroeconomics" className={styles.link}><p>總體經濟</p></Nav.Link>
         </Nav>
       </Navbar.Collapse>
+      <Burger />
+      <Menu />
     </Navbar>
   );
 };
