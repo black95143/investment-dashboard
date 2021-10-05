@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledMenu = styled.nav`
+  visibility: hidden;
   width: 30%;
   box-shadow: 0px 2px 5px gray;
   display: flex;
@@ -12,11 +13,6 @@ export const StyledMenu = styled.nav`
   position: absolute;
   top: 61px;
   right: 0;
-  transition: transform 0.3s ease-in-out;
-  
-  @media (max-width: ${({ theme }) => theme.mobile}) {
-    width: 100%;
-  }
 
   a {
     font-size: 1rem;
@@ -24,15 +20,8 @@ export const StyledMenu = styled.nav`
     font-weight: bold;
     color: #787676;
     text-decoration: none;
-    transition: color 0.3s linear;
-    
-    @media (max-width: ${({ theme }) => theme.mobile}) {
-      font-size: 1.5rem;
-      text-align: center;
-    }
-
-    &:hover {
-      color: ${({ theme }) => theme.primaryHover};
-    }
   }
+
+  transform: ${({ open }) => open ? 'translateY(0); visibility: visible;' : 'translateY(0); visibility: hidden;'};
+
 `;
