@@ -18,3 +18,13 @@
 .link p:hover {
   color: white;
 }
+
+.burger {
+    visibility: hidden;
+}
+
+@media screen and (max-width: 576px) {
+  .link {
+    visibility: hidden;
+  }
+}

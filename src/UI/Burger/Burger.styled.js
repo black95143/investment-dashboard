@@ -19,8 +19,13 @@ export const StyledBurger = styled.button`
     height: 0.25rem;
     background: #787676;
     border-radius: 10px;
-    transition: all 0.3s linear;
     position: relative;
     transform-origin: 1px;
+  }
+
+  @media screen and (min-width: 576px) {
+    div {
+      visibility: hidden;
+    }
   }
 `;
