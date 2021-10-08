@@ -11,6 +11,9 @@ const Menu = ({ open }) => {
       <a href="/macroeconomics">
         總體經濟
       </a>
+      <a href="/taiwanstockta">
+        台股技術面
+      </a>
     </StyledMenu>
   )
 }

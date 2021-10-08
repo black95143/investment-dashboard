@@ -24,6 +24,7 @@ const Topbar = (props) => {
         <Nav className="me-auto" activeKey={props.path}>
           <Nav.Link href="/" className={styles.link}><p>首頁</p></Nav.Link>
           <Nav.Link href="/macroeconomics" className={styles.link}><p>總體經濟</p></Nav.Link>
+          <Nav.Link href="/taiwanstockta" className={styles.link}><p>台股技術面</p></Nav.Link>
         </Nav>
       </Navbar.Collapse>
       <Burger open={open} setOpen={setOpen} />
