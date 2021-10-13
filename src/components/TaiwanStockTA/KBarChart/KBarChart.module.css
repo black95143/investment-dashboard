@@ -41,3 +41,8 @@
 .green_text {
   color: #009900;
 }
+
+.loading_icon {
+  margin: 0 auto;
+  margin-top: 15rem;
+}

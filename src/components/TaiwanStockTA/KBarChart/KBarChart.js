@@ -1,4 +1,5 @@
 import React, {useCallback, useState, useEffect} from 'react';
+import ReactLoading from "react-loading";
 import styles from './KBarChart.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
@@ -92,7 +93,7 @@ const KBarChart = (props) => {
 
   return (
     <React.Fragment>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <ReactLoading className={styles.loading_icon} type={'spin'} color={'#89CCDF'} width={100} />}
       {!isLoading && 
         <div className={styles.frame}>
         <div className={styles.stock_name}>{chartSeries.stockId}</div>
