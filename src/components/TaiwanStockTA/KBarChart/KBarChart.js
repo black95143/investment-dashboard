@@ -1,114 +1,157 @@
-import React from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import styles from './KBarChart.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
-import data from './dummyData.json';
+import FinmindAPI from '../../../API/finmindAPI/finmindAPI';
 
-let ohlc = [],
-  volume = [],
-  dataLength = data.length,
-  // set the allowed units for data grouping
-  groupingUnits = [[
-    'week',                         // unit name
-    [1]                             // allowed multiples
-  ], [
-    'month',
-    [1, 2, 3, 4, 6]
-  ]],
+const today = new Date();
 
-  i = 0;
+const KBarChart = (props) => {
+  const [chartSeries, setChartSeries] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-for (i; i < dataLength; i += 1) {
-  ohlc.push([
-    new Date(data[i].date).getTime(), // the date
-    data[i].open, // open
-    data[i].max, // high
-    data[i].min, // low
-    data[i].close // close
-  ]);
+  const fetchData = useCallback(async (stockNo) => {
+    let parse_date = new Date(today.valueOf() - 380 * 1000 * 60 * 60 * 24).toISOString().slice(0, 10);
+    return FinmindAPI({
+      dataset: "TaiwanStockPrice",
+      data_id: stockNo,
+      start_date: parse_date,
+      end_date: ""
+    }).then((response) => response.json())
+      .then((res) => {
+        let stockId = res.data[0].stock_id,
+            latestTwoClose = [],
+            ohlc = [],
+            volume = [],
+            dataLength = res.data.length,
+            // set the allowed units for data grouping
+            groupingUnits = [[
+              'week',                         // unit name
+              [1]                             // allowed multiples
+            ], [
+              'month',
+              [1, 2, 3, 4, 6]
+            ]],
 
-  volume.push([
-    new Date(data[i].date).getTime(), // the date
-    data[i].Trading_Volume // the volume
-  ]);
-}
+            i = 0;
 
-const KBarChart = () => {
-  const chartOption = {
-    rangeSelector: {
-      selected: 1
-    },
+        for (i; i < dataLength; i += 1) {
+          ohlc.push([
+            new Date(res.data[i].date).getTime(), // the date
+            res.data[i].open, // open
+            res.data[i].max, // high
+            res.data[i].min, // low
+            res.data[i].close // close
+          ]);
 
-    chart: {
-      height: 500
-    },
+          volume.push([
+            new Date(res.data[i].date).getTime(), // the date
+            res.data[i].Trading_Volume // the volume
+          ]);
 
-    yAxis: [{
-      labels: {
-        align: 'right',
-        x: -3
-      },
-      title: {
-        text: 'OHLC'
-      },
-      height: '60%',
-      lineWidth: 2,
-      resize: {
-        enabled: true
-      }
-    }, {
-      labels: {
-        align: 'right',
-        x: -3
-      },
-      title: {
-        text: 'Volume'
-      },
-      top: '65%',
-      height: '35%',
-      offset: 0,
-      lineWidth: 2
-    }],
+          if (i === dataLength - 2) {
+            latestTwoClose.push(res.data[i].close)
+          }
+          if (i === dataLength - 1) {
+            latestTwoClose.push(res.data[i].close)
+          }
+        }
 
-    tooltip: {
-      split: true
-    },
+        setChartSeries(() => {
+          return {
+            stockId,
+            series: [{
+              type: 'candlestick',
+              name: props.stockNo,
+              data: ohlc,
+              dataGrouping: {
+                units: groupingUnits
+              }
+            }, {
+              type: 'column',
+              name: 'Volume',
+              data: volume,
+              yAxis: 1,
+              dataGrouping: {
+                units: groupingUnits
+              }
+            }],
+            spread_value: Math.round((latestTwoClose[1] - latestTwoClose[0]) * 100) / 100,
+            spread_percent: Math.round((latestTwoClose[1] - latestTwoClose[0]) / latestTwoClose[0] * 10000) / 100
+          }
+        })
 
-    series: [{
-      type: 'candlestick',
-      name: '2330',
-      data: ohlc,
-      dataGrouping: {
-        units: groupingUnits
-      }
-    }, {
-      type: 'column',
-      name: 'Volume',
-      data: volume,
-      yAxis: 1,
-      dataGrouping: {
-        units: groupingUnits
-      }
-    }]
-  }
+        setIsLoading(false);
+      })
+  }, [props.stockNo]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchData(props.stockNo);
+  }, [fetchData, props]);
 
   return (
     <React.Fragment>
-      <div className={styles.frame}>
-        <div className={styles.stock_name}>台積電(2330)</div>
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && 
+        <div className={styles.frame}>
+        <div className={styles.stock_name}>{chartSeries.stockId}</div>
         <div className={styles.lastClose}>
-          <div className={styles.price}>580</div>
-          <div className={styles.spread_value}>+9.00</div>
-          <div className={styles.spread_percent}>(+1.58%)</div>
+          <div className={styles.price}>{chartSeries.series[0].data[chartSeries.series[0].data.length-1][4]}</div>
+          {chartSeries.spread_value > 0 &&  <div className={`${styles.spread_value} ${styles.red_text}`}>+{chartSeries.spread_value}</div>}
+          {chartSeries.spread_value < 0 &&  <div className={`${styles.spread_value} ${styles.green_text}`}>{chartSeries.spread_value}</div>}
+          {chartSeries.spread_value > 0 && <div className={`${styles.spread_percent} ${styles.red_text}`}>(+{chartSeries.spread_percent}%)</div>}
+          {chartSeries.spread_value < 0 && <div className={`${styles.spread_percent} ${styles.green_text}`}>({chartSeries.spread_percent}%)</div>}
         </div>
         <div className={styles.bar_chart}>
           <HighchartsReact
             highcharts={Highcharts}
             constructorType={'stockChart'}
-            options={chartOption}
+            options={{
+              rangeSelector: {
+                selected: 5
+              },
+          
+              chart: {
+                height: 500
+              },
+          
+              yAxis: [{
+                labels: {
+                  align: 'right',
+                  x: -3
+                },
+                title: {
+                  text: 'OHLC'
+                },
+                height: '60%',
+                lineWidth: 2,
+                resize: {
+                  enabled: true
+                }
+              }, {
+                labels: {
+                  align: 'right',
+                  x: -3
+                },
+                title: {
+                  text: 'Volume'
+                },
+                top: '65%',
+                height: '35%',
+                offset: 0,
+                lineWidth: 2
+              }],
+          
+              tooltip: {
+                split: true
+              }
+              ,...chartSeries
+            }}
           />
         </div>
       </div>
+      }
     </React.Fragment>
   )
 };

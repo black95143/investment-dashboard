@@ -5,7 +5,7 @@
 }
 
 .stock_name {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .lastClose {
@@ -15,6 +15,8 @@
 .price {
   font-size: 1.8rem;
   margin-right: 10px;
+  height: 43px;
+  line-height: 43px;
 }
 
 .spread_value {
@@ -30,4 +32,12 @@
   height: 43px;
   line-height: 43px;
   vertical-align: middle;
+}
+
+.red_text {
+  color: #B40021;
+}
+
+.green_text {
+  color: #009900;
 }
