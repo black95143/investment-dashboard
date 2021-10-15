@@ -4,6 +4,7 @@ import styles from './KBarChart.module.css';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import FinmindAPI from '../../../API/finmindAPI/finmindAPI';
+import stockName from './stockName.json';
 
 const today = new Date();
 
@@ -96,7 +97,7 @@ const KBarChart = (props) => {
       {isLoading && <ReactLoading className={styles.loading_icon} type={'spin'} color={'#89CCDF'} width={100} />}
       {!isLoading && 
         <div className={styles.frame}>
-        <div className={styles.stock_name}>{chartSeries.stockId}</div>
+        <div className={styles.stock_name}>{stockName[chartSeries.stockId]}({chartSeries.stockId})</div>
         <div className={styles.lastClose}>
           <div className={styles.price}>{chartSeries.series[0].data[chartSeries.series[0].data.length-1][4]}</div>
           {chartSeries.spread_value > 0 &&  <div className={`${styles.spread_value} ${styles.red_text}`}>+{chartSeries.spread_value}</div>}
